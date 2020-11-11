@@ -25,11 +25,13 @@ $results=mysqli_query($connection,$login_validation_query);
 // echo mysqli_num_rows($result);
 if(mysqli_num_rows($results))
 {
+    echo "Welcome";
     header("Location:project/php/mainpage.php");
 }
 else
 {
-    echo "You don't have an account";
+    echo "You don't have an account,please sign up";
+    header("Location:project/php/signup.php");
 }
 }
 ?> 
@@ -41,14 +43,14 @@ else
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="bookingAgentLogin.css">
 </head>
-<script src="index.js"></script>
+<script src="bookingAgentLogin.js"></script>
 <body>
     <div class="container">
         <h1>Railway Reservation System</h1>
         <h3>Login Page</h3>
-        <form action="index.php" method="post">
+        <form action="bookingAgentLogin.php" method="post">
             <input type="name" name="name" id="name" placeholder="Enter your Full Name">
             <input type="cno" name="cno" id="cno" placeholder="Enter your Credit Card No">
             <br>
