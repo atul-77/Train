@@ -1,0 +1,43 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.container{
+    max-width: 85%;
+    /* background-color: rgb(248, 97, 230); */
+    padding: 35px;
+    margin: auto;
+}
+.container h4,h1, p{
+    text-align: center;
+}
+p{
+    font-size: 18px;
+    font-style: oblique;
+}
+input{
+    border-radius: 10px;
+    border: 2px solid black;
+    font-size: 18px;
+    width: 50%;
+    margin: 15px;
+    text-align: center;
+    display: block;
+}
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.btn{
+    margin: auto;
+    cursor: pointer;
+}
+.bg{
+    width: 100%;
+    opacity: 0.7;
+    position: absolute;
+    z-index: -1;
+}
