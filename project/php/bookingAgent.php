@@ -31,7 +31,7 @@ if(mysqli_num_rows($results))
 else
 {
     echo "You don't have an account,please sign up";
-    header("Location:signup.php");
+    header("Location:mainpage.php");
 }
 }
 ?> 
