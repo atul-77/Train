@@ -18,7 +18,12 @@
             <button class="btn">
                 Submit
             </button>
-
+        </form>
+        <br><br>
+        <form action="bookingAgentLogin.php">
+            <button class="btn">
+                Already a user? Go to login page
+            </button>
         </form>
     </div>
     <script src="assets/js/bas.js"></script>
