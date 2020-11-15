@@ -36,7 +36,8 @@ form{
     cursor: pointer;
 }
 .bg{
-    width: 100%;
+    width: 1920px;
+    height: 1080px; 
     opacity: 0.7;
     position: absolute;
     z-index: -1;

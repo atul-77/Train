@@ -1,5 +1,4 @@
 <?php
-if(isset($_POST['name'])){
 $server="localhost";
 $username="root";
 $password="";
@@ -26,7 +25,7 @@ $results=mysqli_query($connection,$login_validation_query);
 if(mysqli_num_rows($results))
 {
     echo "Welcome";
-    header("Location:project/php/mainpage.php");
+    header("Location:/project/php/mainpage.php");
 }
 else
 {
