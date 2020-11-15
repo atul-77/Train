@@ -1,6 +1,7 @@
 <?php
+    echo "Build Main Page here";
+    if(isset($_POST['name'])){
     include('config.php');
-
     $name  = $_POST['name'];
     $credit  = $_POST['credit'];
     $address = $_POST['address'];
@@ -16,4 +17,5 @@
         exit();
     }
     $con->close();
+}
 ?>
