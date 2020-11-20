@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Railway Reservation System</h1>
-        <h3>Trains Between Stations</h3>
+        <h2>Trains Between Stations</h2>
         <!-- <form action="php\afterBookingAgent.php" method="post">
             <p><b>Enter the date for which you want to view trains:</b></p>
             <input type="date" name="date" id="date" placeholder="Enter the date for which you want to book the ticket">
@@ -39,18 +39,38 @@ else
 {
     // echo "Couldn't connect to Database";
 }
+
 $d=mysqli_real_escape_string($connection,$_POST['date']);
 $ss=mysqli_real_escape_string($connection,$_POST['startstn']);
 $es=mysqli_real_escape_string($connection,$_POST['endstn']);
 // echo $d;
 // echo $ss;
 // echo $es;
-$login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`
-FROM `totaltrain`,`scheduledtrains` 
-WHERE `totaltrain`.`TrainNo.` = `scheduledtrains`.`TrainNo.` 
-AND `scheduledtrains`.`Date`='$d' 
-AND `totaltrain`.`Source`='$ss' 
-AND `totaltrain`.`Destination`='$es'";
+$login_validation_query="";
+if($d!="" And $ss!="" And $es!="")
+{
+    $login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`
+    FROM `totaltrain`,`scheduledtrains` 
+    WHERE `totaltrain`.`TrainNo.` = `scheduledtrains`.`TrainNo.` 
+    AND `scheduledtrains`.`Date`='$d' 
+    AND `totaltrain`.`Source`='$ss' 
+    AND `totaltrain`.`Destination`='$es'";
+}
+else if($d=="" And $ss!="" And $es!="")
+{
+    $login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`
+    FROM `totaltrain`,`scheduledtrains` 
+    WHERE `totaltrain`.`TrainNo.` = `scheduledtrains`.`TrainNo.` 
+    AND `totaltrain`.`Source`='$ss' 
+    AND `totaltrain`.`Destination`='$es'";
+}
+else if($d!="" And $ss=="" And $es=="")
+{
+    $login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`
+    FROM `totaltrain`,`scheduledtrains` 
+    WHERE `totaltrain`.`TrainNo.` = `scheduledtrains`.`TrainNo.` 
+    AND `scheduledtrains`.`Date`='$d'"; 
+}
 // $login_validation_query="SELECT * FROM `scheduledtrains` WHERE `scheduledtrains`.`Date` = $d AND ";
 $results=mysqli_query($connection,$login_validation_query);
 $bookingButton="<a href='mainpage.php'>Book this train</a>";
@@ -84,8 +104,3 @@ else
 // }
 }
 ?> 
-
-
-
-
-
