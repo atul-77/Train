@@ -86,7 +86,7 @@ if ($results->num_rows > 0)
     }
 else
     {
-        echo "<div class='sorry'> Sorry!<br>For that date we don't have trains running from ". $ss . " to " . $es.".";
+        echo "<div class='sorry'> Sorry!<br>We don't have any trains matching your query, try changing the date or start, end stations!";
         echo "<br>";
         echo "<p>Press <a href='..\afterBookingAgentLogin.php'>here</a> to go back to the search page.</p> </div>";
     }
@@ -104,3 +104,8 @@ else
 // }
 }
 ?> 
+
+
+
+
+
