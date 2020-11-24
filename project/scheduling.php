@@ -17,8 +17,8 @@
         $number_coaches = 0;
 
         // Add date
-        $sql = "INSERT INTO `Train`.`scheduledtrains`(`TrainNo.`, `#ofACCoaches`, `#ofSleeperCoaches`, `#ofACRemaining`, `#ofSleeperRemaing`) 
-                VALUES ($train_number, $ac_coaches, $sp_coaches, $number_coaches, $number_coaches)";
+        $sql = "INSERT INTO `Train`.`scheduledtrains`(`TrainNo.`, `Date`, `#ofACCoaches`, `#ofSleeperCoaches`, `#ofACRemaining`, `#ofSleeperRemaing`) 
+                VALUES ($train_number, $date, $ac_coaches, $sp_coaches, $number_coaches, $number_coaches)";
 
         if($result = $con -> query($sql)){
             echo "New train scheduled!";
