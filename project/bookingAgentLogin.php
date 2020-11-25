@@ -11,12 +11,12 @@
     <div class="container">
         <h1>Railway Reservation System</h1>
         <h3>Login Page</h3>
-        <form action="php\bookingAgent.php" method="post">
+        <form action="afterBookingAgentLogin.php" method="post">
             <input type="name" name="name" id="name" placeholder="Enter your Full Name">
             <input type="cno" name="cno" id="cno" placeholder="Enter your Credit Card No">
             <br>
             <button class="btn" name="Submit">Submit</button>
-            <p>Not a user already?Click <a href="php\mainpage.php">here</a> to sign up.</p>
+            <p>Not a user already?Click <a href="gate.php">here</a> to sign up.</p>
         </form>
     </div>
 </body>
