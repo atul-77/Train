@@ -17,7 +17,9 @@
 
         if($count == 1){
             $_SESSION['login_user'] = $username;
+            $_SESSION["permission"] = 'admin';
 
+            header("Location: ./../scheduling.php");
             echo "Logged In!";
         }
         else{

@@ -2,7 +2,7 @@
     include('php/config.php');
     session_start();
     // Don't access without logging in!
-    if($_SESSION['sid'] != session_id()){
+    if($_SESSION['sid'] != session_id() && $_SESSION['permission'] == 'admin'){
         header("Location: admin.php");
     }
 
@@ -17,8 +17,8 @@
         $number_coaches = 0;
 
         // Add date
-        $sql = "INSERT INTO `Train`.`scheduledtrains`(`TrainNo.`, `Date`, `#ofACCoaches`, `#ofSleeperCoaches`, `#ofACRemaining`, `#ofSleeperRemaing`) 
-                VALUES ($train_number, $date, $ac_coaches, $sp_coaches, $number_coaches, $number_coaches)";
+        $sql = "INSERT INTO `Train`.`scheduledtrains`(`TrainNo.`, `#ofACcoaches`, `#ofSleeperCoaches`, `#ofACRemaining`, `#ofSleeperRemaining`, `Date`) 
+                VALUES ('$train_number', '$ac_coaches', '$sp_coaches', '$number_coaches', '$number_coaches', '$date')";
 
         if($result = $con -> query($sql)){
             echo "New train scheduled!";

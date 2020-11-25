@@ -5,25 +5,31 @@
                 <td>Train Number</td>
                 <td>#ofACCoaches</td>
                 <td>#ofSleeperCoaches</td>
+                <td>Date</td>
             </tr>';
 
-        $sql = "SELECT * FROM `Train`.`scheduledtrains`";
+        $sql = "CALL `Train`.return_trains();";
+        //$db = mysqli_select_db($con, 'train');
+        //$sql = "SELECT * FROM `Train`.`scheduledtrains`";
 
         if($result = $con->query($sql)){
             while($row = $result->fetch_assoc()){
                 $field1 = $row["TrainNo."];
-                $field2 = $row["#ofACCoaches"];
+                $field2 = $row["#ofACcoaches"];
                 $field3 = $row["#ofSleeperCoaches"];
+                $field4 = $row["Date"];
 
                 echo '<tr>
                         <td>'.$field1.'</td>
                         <td>'.$field2.'</td>
                         <td>'.$field3.'</td>
+                        <td>'.$field4.'</td>
                     </tr>';
             }
 
             echo '</table>';
         }
+        $con->next_result();
         $result -> free();
     }
 
@@ -37,7 +43,7 @@
                 <td>Arrival Time</td>
             </tr>';
 
-        $sql = "SELECT * FROM `Train`.`total train`";
+        $sql = "SELECT * FROM `Train`.`totaltrain`";
 
         if($result = $con->query($sql)){
             while($row = $result->fetch_assoc()){
@@ -62,7 +68,7 @@
     }
 
     function trainNumber($con){
-        $sql = "SELECT `TrainNo.` FROM `Train`.`total train`";
+        $sql = "SELECT `TrainNo.` FROM `Train`.`totaltrain`";
 
         if($result = $con->query($sql)){
             while($row = $result->fetch_assoc()){
