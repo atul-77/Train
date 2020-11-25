@@ -3,6 +3,10 @@
     padding:0;
     box-sizing: border-box;
 }
+.msg{
+    text-align: center;
+    font-size: 25px;
+}
 table, th, td 
 {
     border: 1px solid black;
@@ -13,7 +17,7 @@ td
 }
 table{
     margin:auto;
-    width:100%;
+    width:80%;
     font-size: 20px;
 }
 .sorry{
