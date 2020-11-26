@@ -78,7 +78,7 @@ else if($d!="" And $ss=="" And $es=="")
 $check=0;
 $cnt=0;
 $results=mysqli_query($connection,$login_validation_query);
-if ($results->num_rows > 0) 
+if ($results != null && $results->num_rows > 0) 
     {
         if($sp==0)
         {
