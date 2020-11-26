@@ -75,12 +75,17 @@ else if($d!="" And $ss=="" And $es=="")
     AND `scheduledtrains`.`Date`='$d'"; 
 }
 
+$check=0;
+$cnt=0;
 $results=mysqli_query($connection,$login_validation_query);
 if ($results->num_rows > 0) 
     {
-        echo "<div class='msg'><b>We found the following direct trains for your query:</b></div>";
-        echo "<br>";
-        echo "<table> <tr> <th>Train Number</th> <th>Date</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
+        if($sp==0)
+        {
+            echo "<div class='msg'><b>We found the following direct trains for your query:</b></div>";
+            echo "<br>";
+            echo "<table> <tr> <th>Train Number</th> <th>Date</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
+        }
         while($row = $results->fetch_assoc()) 
         {
             $trainnum = $row["TrainNo."];
@@ -90,16 +95,27 @@ if ($results->num_rows > 0)
             {
                 if($row["Source"]===$ss And $row["Destination"]===$es And $row["Date"]===$d)
                 {
+                    if($cnt==0)
+                    {
+                        echo "<div class='msg'><b>We found the following direct trains for your query:</b></div>";
+                        echo "<br>";
+                        echo "<table> <tr> <th>Train Number</th> <th>Date</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
+                        $cnt=1;
+                    }
                     echo "<tr> <td>".$row["TrainNo."]."</td><td>".$row["Date"]."</td><td>".$row["Source"]."</td><td>".$row["Destination"]."</td><td>".$row["ArrivalTime"]."</td><td>".$row["DepartureTime"]."</td><td>".$bookingButton."</td></tr>";
+                    $check=1;
                 }
             }
             else
-            echo "<tr> <td>".$row["TrainNo."]."</td><td>".$row["Date"]."<td>".$row["Source"]."</td><td>".$row["Destination"]."</td><td>".$row["ArrivalTime"]."</td><td>".$row["DepartureTime"]."</td><td>".$bookingButton."</td></tr>";
+            {
+                echo "<tr> <td>".$row["TrainNo."]."</td><td>".$row["Date"]."<td>".$row["Source"]."</td><td>".$row["Destination"]."</td><td>".$row["ArrivalTime"]."</td><td>".$row["DepartureTime"]."</td><td>".$bookingButton."</td></tr>";
+                $check=1;
+            }
         }
         echo "</table>";
         echo "<br>";
     }
-else
+if($check==0)
     {
         echo "<div class='sorry'> Sorry!<br>We don't have any direct trains matching your query, try changing the date or start, end stations!";
         echo "<br>";
@@ -145,15 +161,17 @@ else if($d!="" And $ss=="" And $es=="")
 $results=mysqli_query($connection,$one_hop);
     if ($results->num_rows > 0) 
     {
-        $trainnum = $row["TrainNo."];
-        $date = $row["Date"];
-        $bookingButton = "<a href='..\bookingportal.php?trainnum=$trainnum&date=$date'>Book this train</a>";
         echo "<div class='msg'><b>We found the following one-hop trains for your query:</b></div>";
         echo "<br>";
-        echo "<table> <tr> <th>Train Number</th> <th>Date</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Train Number</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
+        echo "<table> <tr> <th>Train Number</th> <th>Date</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Train Number</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking first train</th> <th>Booking second train</th> </tr>";
         while($row = $results->fetch_assoc()) 
         {
-            echo "<tr> <td>".$row["Date"]."</td><td>".$row["t1_tn"]."</td><td>".$row["t1_s"]."</td><td>".$row["t1_d"]."</td><td>".$row["t1_AT"]."</td><td>".$row["t1_DT"]."</td><td>".$row["t2_tn"]."</td><td>".$row["t2_s"]."</td><td>".$row["t2_d"]."</td><td>".$row["t2_AT"]."</td><td>".$row["t2_DT"]."</td><td>".$bookingButton."</td></tr>";
+            $trainnum = $row["t1_tn"];
+            $trainnum2 = $row["t2_tn"];
+            $date = $row["Date"];
+            $bookingButton = "<a href='..\bookingportal.php?trainnum=$trainnum&date=$date'>Book first train</a>";
+            $bookingButton2 = "<a href='..\bookingportal.php?trainnum=$trainnum2&date=$date'>Book second train</a>";
+            echo "<tr> <td>".$row["Date"]."</td><td>".$row["t1_tn"]."</td><td>".$row["t1_s"]."</td><td>".$row["t1_d"]."</td><td>".$row["t1_AT"]."</td><td>".$row["t1_DT"]."</td><td>".$row["t2_tn"]."</td><td>".$row["t2_s"]."</td><td>".$row["t2_d"]."</td><td>".$row["t2_AT"]."</td><td>".$row["t2_DT"]."</td><td>".$bookingButton."</td><td>".$bookingButton2."</td></tr>";
         }
         echo "</table>";
     }
