@@ -4,6 +4,10 @@
     if($_SESSION['sid'] != session_id()){
         header("Location: bookingAgentLogin.php");
     }
+
+    $_SESSION["trainnum"] = $_GET["trainnum"];
+    $_SESSION["date"] = $_GET["date"];
+
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +21,6 @@
 <body>
     <div class="container">
         <form action="bookingportalII.php" method="post">
-            <input type="text" name="trainnum" id="trainnum" placeholder="Enter the train number">
             <input type="text" name="coachType" id="coachType" placeholder="Enter your preffered coach type, i.e AC or Sleeper">
             <input type="text" name="numPassengers" id="numPassengers" placeholder="Enter the number of total niggas travelling">
             <button class="btn">

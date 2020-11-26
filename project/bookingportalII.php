@@ -10,8 +10,11 @@
         $numPassengers = 0;
         
         if($_SERVER["REQUEST_METHOD"] == "POST"){
-            if(isset($_POST['trainnum'])){
-                $trainnum = $_POST['trainnum'];
+            if(isset($_SESSION['trainnum'])){
+                $trainnum = $_SESSION['trainnum'];
+            }
+            if(isset($_SESSION['date'])){
+                $date = $_SESSION['date'];
             }
             if(isset($_POST['coachType'])){
                 $coachType =  $_POST["coachType"];
@@ -27,19 +30,21 @@
             echo "<br>";
             if($coachType=="AC" || $coachType=="ac"){
                 $rType = "#ofACRemaining";
+                $coach = "AC";
                 $rNum = 18;
             }
             else{
                 $rType = "#ofSleeperRemaining";
+                $coach = "Sleeper";
                 $rNum = 24;
             }
 
             $checkAvailable = "SELECT `$rType` 
                             FROM  `Train`.`scheduledtrains` 
-                            WHERE `TrainNo.` = $trainnum;";
+                            WHERE `TrainNo.` = $trainnum AND `Date` = '$date'";
             $numAvailable = mysqli_query($con, $checkAvailable);
             // echo ;
-
+            
             $available = $numAvailable->fetch_row()[0];
             // echo $available;
 
@@ -51,11 +56,12 @@
                 $_SESSION["trainNum"] = $trainnum;
                 $_SESSION["availableNum"] = $available;
                 $_SESSION["passengersNum"] = $numPassengers;
+                $_SESSION["coach"] = $coach;
 
                 $updated_seats = $available - $numPassengers;
                 $update = "UPDATE `Train`.`scheduledtrains` 
                         SET `$rType` = $updated_seats  
-                        WHERE `TrainNo.` = $trainnum;";
+                        WHERE `TrainNo.` = $trainnum AND `Date` = '$date';";
                 mysqli_query($con, $update);
 
                 // echo $update;

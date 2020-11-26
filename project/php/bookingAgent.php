@@ -23,6 +23,6 @@
         $_SESSION['booking_agent_credit'] = $c;
         $_SESSION['sid'] = session_id();
 
-        header("Location:./../bookingportal.php");
+        header("Location: ./../AfterBookingAgentLogin.php");
     }
 ?> 

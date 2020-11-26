@@ -61,7 +61,7 @@ if($d!="" And $ss!="" And $es!="")
 }
 else if($d=="" And $ss!="" And $es!="")
 {
-    $login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`
+    $login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`, `scheduledtrains`.`Date`
     FROM `totaltrain`,`scheduledtrains` 
     WHERE `totaltrain`.`TrainNo.` = `scheduledtrains`.`TrainNo.` 
     AND `totaltrain`.`Source`='$ss' 
@@ -69,7 +69,7 @@ else if($d=="" And $ss!="" And $es!="")
 }
 else if($d!="" And $ss=="" And $es=="")
 {
-    $login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`
+    $login_validation_query="SELECT `totaltrain`.`TrainNo.`, `totaltrain`.`Source`, `totaltrain`.`Destination`, `totaltrain`.`ArrivalTime`, `totaltrain`.`DepartureTime`, `scheduledtrains`.`Date`
     FROM `totaltrain`,`scheduledtrains`
     WHERE `totaltrain`.`TrainNo.` = `scheduledtrains`.`TrainNo.` 
     AND `scheduledtrains`.`Date`='$d'"; 
@@ -80,18 +80,21 @@ if ($results->num_rows > 0)
     {
         echo "<div class='msg'><b>We found the following direct trains for your query:</b></div>";
         echo "<br>";
-        echo "<table> <tr> <th>Train Number</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
+        echo "<table> <tr> <th>Train Number</th> <th>Date</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
         while($row = $results->fetch_assoc()) 
         {
+            $trainnum = $row["TrainNo."];
+            $date = $row["Date"];
+            $bookingButton = "<a href='..\bookingportal.php?trainnum=$trainnum&date=$date'>Book this train</a>";
             if($sp===1)
             {
                 if($row["Source"]===$ss And $row["Destination"]===$es And $row["Date"]===$d)
                 {
-                    echo "<tr> <td>".$row["TrainNo."]."</td><td>".$row["Source"]."</td><td>".$row["Destination"]."</td><td>".$row["ArrivalTime"]."</td><td>".$row["DepartureTime"]."</td><td>".$bookingButton."</td></tr>";
+                    echo "<tr> <td>".$row["TrainNo."]."</td><td>".$row["Date"]."</td><td>".$row["Source"]."</td><td>".$row["Destination"]."</td><td>".$row["ArrivalTime"]."</td><td>".$row["DepartureTime"]."</td><td>".$bookingButton."</td></tr>";
                 }
             }
             else
-            echo "<tr> <td>".$row["TrainNo."]."</td><td>".$row["Source"]."</td><td>".$row["Destination"]."</td><td>".$row["ArrivalTime"]."</td><td>".$row["DepartureTime"]."</td><td>".$bookingButton."</td></tr>";
+            echo "<tr> <td>".$row["TrainNo."]."</td><td>".$row["Date"]."<td>".$row["Source"]."</td><td>".$row["Destination"]."</td><td>".$row["ArrivalTime"]."</td><td>".$row["DepartureTime"]."</td><td>".$bookingButton."</td></tr>";
         }
         echo "</table>";
         echo "<br>";
@@ -108,7 +111,7 @@ if($d!="" And $ss!="" And $es!="")
 {
     $one_hop=
     "SELECT t1.`TrainNo.` AS t1_tn, t1.`Source` AS t1_s, t1.`Destination` AS t1_d, t1.`ArrivalTime` AS t1_AT, t1.`DepartureTime` AS t1_DT,
-    t2.`TrainNo.` AS t2_tn, t2.`Source` AS t2_s, t2.`Destination` AS t2_d, t2.`ArrivalTime` AS t2_AT, t2.`DepartureTime` AS t2_DT
+    t2.`TrainNo.` AS t2_tn, t2.`Source` AS t2_s, t2.`Destination` AS t2_d, t2.`ArrivalTime` AS t2_AT, t2.`DepartureTime` AS t2_DT, st1.`Date`
     FROM `totaltrain` t1, `totaltrain` t2, `scheduledtrains` st1, `scheduledtrains` st2 
     WHERE t1.`TrainNo.`=st1.`TrainNo.` AND t2.`TrainNo.`=st2.`TrainNo.` 
     AND st1.`Date`=st2.`Date`
@@ -120,7 +123,7 @@ else if($d=="" And $ss!="" And $es!="")
 {
     $one_hop=
     "SELECT t1.`TrainNo.` AS t1_tn, t1.`Source` AS t1_s, t1.`Destination` AS t1_d, t1.`ArrivalTime` AS t1_AT, t1.`DepartureTime` AS t1_DT,
-    t2.`TrainNo.` AS t2_tn, t2.`Source` AS t2_s, t2.`Destination` AS t2_d, t2.`ArrivalTime` AS t2_AT, t2.`DepartureTime` AS t2_DT
+    t2.`TrainNo.` AS t2_tn, t2.`Source` AS t2_s, t2.`Destination` AS t2_d, t2.`ArrivalTime` AS t2_AT, t2.`DepartureTime` AS t2_DT, st1.`Date`
     FROM `totaltrain` t1, `totaltrain` t2, `scheduledtrains` st1, `scheduledtrains` st2 
     WHERE t1.`TrainNo.`=st1.`TrainNo.` AND t2.`TrainNo.`=st2.`TrainNo.` 
     AND st1.`Date`=st2.`Date`
@@ -131,7 +134,7 @@ else if($d!="" And $ss=="" And $es=="")
 {
     $one_hop=
     "SELECT t1.`TrainNo.` AS t1_tn, t1.`Source` AS t1_s, t1.`Destination` AS t1_d, t1.`ArrivalTime` AS t1_AT, t1.`DepartureTime` AS t1_DT,
-    t2.`TrainNo.` AS t2_tn, t2.`Source` AS t2_s, t2.`Destination` AS t2_d, t2.`ArrivalTime` AS t2_AT, t2.`DepartureTime` AS t2_DT
+    t2.`TrainNo.` AS t2_tn, t2.`Source` AS t2_s, t2.`Destination` AS t2_d, t2.`ArrivalTime` AS t2_AT, t2.`DepartureTime` AS t2_DT, st1.`Date`
     FROM `totaltrain` t1, `totaltrain` t2, `scheduledtrains` st1, `scheduledtrains` st2 
     WHERE t1.`TrainNo.`=st1.`TrainNo.` AND t2.`TrainNo.`=st2.`TrainNo.` 
     AND st1.`Date`=st2.`Date`
@@ -142,12 +145,15 @@ else if($d!="" And $ss=="" And $es=="")
 $results=mysqli_query($connection,$one_hop);
     if ($results->num_rows > 0) 
     {
+        $trainnum = $row["TrainNo."];
+        $date = $row["Date"];
+        $bookingButton = "<a href='..\bookingportal.php?trainnum=$trainnum&date=$date'>Book this train</a>";
         echo "<div class='msg'><b>We found the following one-hop trains for your query:</b></div>";
         echo "<br>";
-        echo "<table> <tr> <th>Train Number</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Train Number</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
+        echo "<table> <tr> <th>Train Number</th> <th>Date</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Train Number</th> <th>Source</th> <th>Destination</th> <th>Arrival Time</th> <th>Departure Time</th> <th>Booking</th> </tr>";
         while($row = $results->fetch_assoc()) 
         {
-            echo "<tr> <td>".$row["t1_tn"]."</td><td>".$row["t1_s"]."</td><td>".$row["t1_d"]."</td><td>".$row["t1_AT"]."</td><td>".$row["t1_DT"]."</td><td>".$row["t2_tn"]."</td><td>".$row["t2_s"]."</td><td>".$row["t2_d"]."</td><td>".$row["t2_AT"]."</td><td>".$row["t2_DT"]."</td><td>".$bookingButton."</td></tr>";
+            echo "<tr> <td>".$row["Date"]."</td><td>".$row["t1_tn"]."</td><td>".$row["t1_s"]."</td><td>".$row["t1_d"]."</td><td>".$row["t1_AT"]."</td><td>".$row["t1_DT"]."</td><td>".$row["t2_tn"]."</td><td>".$row["t2_s"]."</td><td>".$row["t2_d"]."</td><td>".$row["t2_AT"]."</td><td>".$row["t2_DT"]."</td><td>".$bookingButton."</td></tr>";
         }
         echo "</table>";
     }

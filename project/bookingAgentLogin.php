@@ -11,7 +11,7 @@
     <div class="container">
         <h1>Railway Reservation System</h1>
         <h3>Login Page</h3>
-        <form action="afterBookingAgentLogin.php" method="post">
+        <form action="php/bookingAgent.php" method="post">
             <input type="name" name="name" id="name" placeholder="Enter your Full Name">
             <input type="cno" name="cno" id="cno" placeholder="Enter your Credit Card No">
             <br>

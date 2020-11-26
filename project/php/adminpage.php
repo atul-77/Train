@@ -18,6 +18,7 @@
         if($count == 1){
             $_SESSION['login_user'] = $username;
             $_SESSION["permission"] = 'admin';
+            $_SESSION['sid'] = session_id();
 
             header("Location: ./../scheduling.php");
             echo "Logged In!";

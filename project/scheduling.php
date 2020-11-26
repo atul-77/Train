@@ -2,7 +2,7 @@
     include('php/config.php');
     session_start();
     // Don't access without logging in!
-    if($_SESSION['sid'] != session_id() && $_SESSION['permission'] == 'admin'){
+    if($_SESSION['sid'] != session_id() and $_SESSION['permission'] == 'admin'){
         header("Location: admin.php");
     }
 

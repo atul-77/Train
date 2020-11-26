@@ -42,6 +42,7 @@
             $numAvailable = $_SESSION["availableNum"];
             $rNum = $_SESSION["rNum"];
             $trainnum = $_SESSION["trainNum"];
+            $coach = $_SESSION["coach"];
 
             $PNR = strval(time()).strval($trainnum);
             $ticket_add = "CALL `Train`.add_train_ticket('".$PNR."', '".$credit."', $trainnum);";
@@ -57,10 +58,10 @@
 
                 $last_id = mysqli_insert_id($con);
                 if($coach_num % $rNum != 0){
-                    $coach_num = ceil( $numAvailable / $rNum);
+                    $coach_num = $coach . (ceil( $numAvailable / $rNum));
                 }
                 else{
-                    $coach_num = ($numAvailable / $rNum) + 1; 
+                    $coach_num = $coach . (($numAvailable / $rNum) + 1); 
                 }
                 $berth_num = ($numAvailable % $rNum) + 1; 
                 $numAvailable = $numAvailable - 1;
