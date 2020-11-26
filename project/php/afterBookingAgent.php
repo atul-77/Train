@@ -183,8 +183,3 @@ $results=mysqli_query($connection,$one_hop);
     }
 }
 ?> 
-
-
-
-
-
