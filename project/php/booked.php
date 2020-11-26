@@ -43,9 +43,10 @@
             $rNum = $_SESSION["rNum"];
             $trainnum = $_SESSION["trainNum"];
             $coach = $_SESSION["coach"];
+            $date = $_SESSION["date"];
 
             $PNR = strval(time()).strval($trainnum);
-            $ticket_add = "CALL `Train`.add_train_ticket('".$PNR."', '".$credit."', $trainnum);";
+            $ticket_add = "CALL `Train`.add_train_ticket('".$PNR."', '".$credit."', $trainnum, '$date');";
 
             if (!$con -> query($ticket_add)) {
                 echo "CALL failed: (" . $con->errno . ") " . $con->error;
@@ -66,7 +67,7 @@
                 $berth_num = ($numAvailable % $rNum) + 1; 
                 $numAvailable = $numAvailable - 1;
 
-                $rides_add = "INSERT INTO `Train`.`rides` (`PNRNumber`,`SNo.`,`CoachNo.`,`BerthNo.`) VALUES ('".$PNR."', $last_id, $coach_num, $berth_num);";
+                $rides_add = "INSERT INTO `Train`.`rides` (`PNRNumber`,`SNo.`,`CoachNo.`,`BerthNo.`) VALUES ('".$PNR."', $last_id, '$coach_num', $berth_num);";
                 $result = mysqli_query($con, $rides_add);
             }
 

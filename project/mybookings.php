@@ -1,3 +1,4 @@
+
 <?php
     include('php/config.php');
     session_start();
@@ -13,6 +14,8 @@
     <head><title>My Bookings</title></head>
     <body>
         <h1>Hello <?php echo $_SESSION['booking_agent_login'] ?></h1>
+        <br>
+        <a href="afterBookingAgentLogin.php">Book another Ticket</a>
         <br><br>
         <h2>Previously Scheduled Trains</h2>
         <br>

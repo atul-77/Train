@@ -57,6 +57,7 @@
                 $_SESSION["availableNum"] = $available;
                 $_SESSION["passengersNum"] = $numPassengers;
                 $_SESSION["coach"] = $coach;
+                $_SESSION["date"] = $date;
 
                 $updated_seats = $available - $numPassengers;
                 $update = "UPDATE `Train`.`scheduledtrains` 
